@@ -1,0 +1,119 @@
+.vscode
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+text_summarization_app_flask/venv/
+text_summarization_app_flask/run_text_smry.ps1
+rag-gradio/.env
+rag-gradio/run_rag_gradio.ps1
+llm-rag/.env
+llm-rag/run_llm_rag_gpt.ps1
+llm_gpt/backend/.env
+llm_gpt/backend/.env.defaults
+llm_gpt/backend/run_llm_gpt.ps1
+llm_gpt/frontend/.env.local
+llm_gpt/frontend/.env.defaults
+llm_gpt/frontend/run_llm_gpt_frontend.ps1
+churn_prediction_mlflow/run_churn_pred_mlflow.ps1
+churn_prediction_mlflow/MLflow-From-Experiment-Tracking-to-Business-Impact.pptx
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# dotenv
+.env
+
+# virtualenv
+.venv
+venv/
+ENV/
+env/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+app/__pycache__/__init__.cpython-37.pyc
+app/__pycache__/views.cpython-37.pyc

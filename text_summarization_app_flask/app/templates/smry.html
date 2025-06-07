@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Summary{% endblock %}
+{% block body %}
+{{ super() }}
+<style type="text/css">
+    .jumbotron {
+        background: #E0EAFC;
+        /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #E3EDFF, #fff);
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #E3EDFF, #fff);
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+</style>
+<div class="jumbotron">
+    {% for i in range(n) %}
+    <h2>{{header[i]}}</h2>
+    <hr class="my-4">
+    <p>{{smry[i]}}</p>
+    <span>Key words: </span>
+    {% for j in range(3) %}
+    <span class="label label-info"> {{key_words[i][j]}}</span>
+    {% endfor %} </br>
+    <span>The original article has <i>{{article_len[i]}}</i> words</span>
+    {% endfor %}
+    <hr class="my-4">
+    <p> You've saved <b>{{time_saved}} </b>mins of reading time over <b>{{n}}</b> article(s). </p>
+
+</div>
+{% endblock %}

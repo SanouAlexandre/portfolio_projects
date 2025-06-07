@@ -1,0 +1,41 @@
+{% extends "base.html" %} {% block title %}About{% endblock %} {% block body %}
+{{ super() }}
+<style type="text/css">
+  .jumbotron {
+    background: #e0eafc;
+    background: -webkit-linear-gradient(to right, #e0eafc, #fff);
+    background: linear-gradient(to right, #e0eafc, #fff);
+  }
+</style>
+
+<div class="jumbotron">
+  <h1>About</h1>
+  <p class="lead">
+    This app is built to make readings easier and quicker by summarizing
+    articles from raw text or a list of URLs.
+  </p>
+  <p class="lead">
+    It performs extractive and abstractive summarization (under development).
+  </p>
+  <footer class="footer pull-right">
+    <a
+      href="https://www.linkedin.com/in/alexandre-sanou-bb3b74101/"
+      target="_blank"
+      style="margin-right: 10px"
+    >
+      <img
+        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg"
+        alt="LinkedIn"
+        width="24"
+      />
+    </a>
+    <a href="https://github.com/SanouAlexandre" target="_blank">
+      <img
+        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+        alt="GitHub"
+        width="24"
+      />
+    </a>
+  </footer>
+</div>
+{% endblock %}
