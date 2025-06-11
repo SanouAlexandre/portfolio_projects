@@ -1,35 +1,40 @@
-# Use official continuumio image with Conda and Python 3.8
+# Use official Conda base image
 FROM continuumio/miniconda3:4.12.0
 
 # Set working directory
 WORKDIR /app
 
+# Install essential system tools
+RUN apt-get update && \
+    apt-get install -y curl bash coreutils && \
+    rm -rf /var/lib/apt/lists/*
 
-
-# Copy environment definition
+# Copy Conda environment file
 COPY conda.yaml .
 
 # Create the conda environment
 RUN conda env create -f conda.yaml
 
-# Install system dependencies (for libstdc++ version issues)
-# ✅ Install updated libstdc++ from conda-forge (fixes GLIBCXX issues)
-RUN conda install -n churn_prediction -c conda-forge libstdcxx-ng
+# Install updated libstdc++ into the environment
+RUN conda run -n churn_prediction conda install -c conda-forge libstdcxx-ng ncurses
 
+# Set environment variables
+ENV PATH=/opt/conda/envs/churn_prediction/bin:$PATH
+ENV LD_LIBRARY_PATH=/opt/conda/envs/churn_prediction/lib
 
-# Set environment path
-ENV PATH /opt/conda/envs/churn_prediction/bin:$PATH
-ENV LD_LIBRARY_PATH /opt/conda/envs/churn_prediction/lib:$LD_LIBRARY_PATH
-
-# Copy rest of the code
+# Copy source code
 COPY . .
 
-# Make entrypoint script executable
+# Add and set permissions for entrypoint script
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Expose MLflow tracking server port
+# Use bash explicitly
+SHELL ["/bin/bash", "-c"]
+
+# Expose MLflow port
 EXPOSE 5000
 
 # Set entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
+

@@ -8,26 +8,37 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # Set work directory
 WORKDIR /code
 
-# Install system dependencies
+# Install system dependencies required by unstructured and NLTK
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    libmagic1 \
+    poppler-utils \
+    tesseract-ocr \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy dependency list
+# Copy requirements first to leverage Docker cache
 COPY requirements.txt .
 
-COPY .env .env
+# Install Python dependencies (nltk included here)
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Install Python dependencies
-RUN pip install --upgrade pip \
-    && pip install -r requirements.txt
+# Pre-install NLTK data to avoid runtime issues
+ENV NLTK_DATA=/usr/share/nltk_data
+RUN mkdir -p $NLTK_DATA && \
+    python -m nltk.downloader -d $NLTK_DATA punkt averaged_perceptron_tagger
 
-# Copy project files
-COPY . .
+# Copy application files
+COPY . /code/
 
-# Expose port uvicorn will run on
+# Expose port
 EXPOSE 8000
 
-# Default command to run the app
-CMD ["uvicorn", "--app-dir=./app", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+# Run the app
+CMD ["gunicorn", "main:app", \
+     "--chdir", "/code/app", \
+     "-k", "uvicorn.workers.UvicornWorker", \
+     "--bind", "0.0.0.0:8000", \
+     "--workers", "4", \
+     "--timeout", "300"]
+

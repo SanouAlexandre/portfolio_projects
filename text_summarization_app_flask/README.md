@@ -1,6 +1,8 @@
 # A Flask Web App for summarizing readings
 
-_Quick, read_ is an app for summarizing readings
+Quick, Read is a lightweight Flask-based web application that allows users to generate summaries of articles or raw text using both extractive and abstractive techniques (abstractive summarization is currently a work in progress).
+
+Whether you're dealing with lengthy readings or just need a quick overview of multiple pages, this app makes summarizing fast and accessible.
 
 Accepted formats include text and HTML
 Summerizes using extractive or abstractive methods (WIP)

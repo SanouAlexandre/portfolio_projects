@@ -2,31 +2,29 @@
 set -e
 
 echo "Starting MLflow tracking server..."
-conda run -n churn_prediction mlflow server \
+
+# Start MLflow server in background using the correct conda env
+conda run -n churn_prediction --no-capture-output mlflow server \
   --backend-store-uri sqlite:///mlflow.db \
   --default-artifact-root ./mlruns \
-  -h 0.0.0.0 -p 5000 &  # Run in background
+  --host 0.0.0.0 --port 5000 &
 
-# Give it a few seconds to start
+# Wait briefly for MLflow server to start
 sleep 5
 
-echo "Training model 1..."
-conda run -n churn_prediction python train.py --data_path data.csv --test_size 0.2 --n_estimators 100
+# Loop over hyperparameters and train models using conda
+for test_size in 0.2 0.4; do
+  for n_estimators in 100 150 200; do
+    echo "Training: test_size=${test_size}, n_estimators=${n_estimators}"
+    conda run -n churn_prediction --no-capture-output python train.py \
+      --data_path data.csv \
+      --test_size $test_size \
+      --n_estimators $n_estimators
+  done
+done
 
-echo "Training model 2..."
-conda run -n churn_prediction python train.py --data_path data.csv --test_size 0.4 --n_estimators 100
+echo "Training End..."
 
-echo "Training model 3..."
-conda run -n churn_prediction python train.py --data_path data.csv --test_size 0.2 --n_estimators 150
-
-echo "Training model 4..."
-conda run -n churn_prediction python train.py --data_path data.csv --test_size 0.4 --n_estimators 150
-
-echo "Training model 5..."
-conda run -n churn_prediction python train.py --data_path data.csv --test_size 0.4 --n_estimators 200
-
-echo "Training model 6..."
-conda run -n churn_prediction python train.py --data_path data.csv --test_size 0.2 --n_estimators 200
-
-
+# Keep container alive
 tail -f /dev/null
+

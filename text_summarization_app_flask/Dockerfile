@@ -13,7 +13,8 @@ COPY requirements.txt .
 
 # Install dependencies
 RUN pip install --upgrade pip \
-    && pip install -r requirements.txt
+    && pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_stable.html
+
 
 # Copy project files
 COPY . .
@@ -22,4 +23,4 @@ COPY . .
 EXPOSE 5000
 
 # Set default command to run the Flask app
-CMD ["python", "run.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "run:app"]
